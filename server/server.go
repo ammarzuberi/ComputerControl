@@ -15,7 +15,7 @@ var applications = map[string]interface{}{
 		AppID:   "amzn1.ask.skill.058881dc-31d8-49a8-bf02-24684d82b9c0",
 		Handler: echoHandleIntent,
 	},
-	"/getCommand": alexa.StdApplication{
+	"/callback/getCommand": alexa.StdApplication{
 		Handler: handleCommandCallback,
 		Methods: "GET",
 	},
@@ -27,6 +27,7 @@ func handleCommandCallback(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Error")
 	} else {
 		fmt.Fprintf(w, currentCommand)
+		redisClient.Set("command", "wait", 0)
 	}
 }
 
