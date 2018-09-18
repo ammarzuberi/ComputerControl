@@ -25,11 +25,14 @@ func echoHandleIntent(w http.ResponseWriter, r *http.Request) {
 		case "lock":
 			log.Println("Locking computer")
 
+			if value, _ := redisClient.Get("command").Result(); value == "wait" {
+				redisClient.Set("command", "lock", 0)
+			}
+
 			response = alexa.NewEchoResponse().OutputSpeech("Computer has been locked.").Card("ComputerControl", "Computer has been locked.")
 		}
 
 		//Add new intents here by name
-
 	}
 
 	json, _ := response.String()
