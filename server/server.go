@@ -6,7 +6,7 @@ import (
 
 var Applications = map[string]interface{}{
 	"/echo/helloworld": alexa.EchoApplication{ // Route
-		AppID:    "123", // Echo App ID from Amazon Dashboard
+		AppID:    "1234", // Echo App ID from Amazon Dashboard
 		OnIntent: EchoIntentHandler,
 		OnLaunch: EchoIntentHandler,
 	},
