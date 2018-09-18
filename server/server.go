@@ -1,20 +1,19 @@
 package main
 
 import (
+	"github.com/go-redis/redis"
 	alexa "github.com/mikeflynn/go-alexa/skillserver"
 	"log"
 	"net/http"
 )
 
-var skills = map[string]interface{}{
-	"/echo/computercontrol": alexa.EchoApplication{ // Route
-		AppID:   "amzn1.ask.skill.058881dc-31d8-49a8-bf02-24684d82b9c0", // Echo App ID from Amazon Dashboard
+var redisClient *redis.Client
+
+var applications = map[string]interface{}{
+	"/echo/computercontrol": alexa.EchoApplication{
+		AppID:   "amzn1.ask.skill.058881dc-31d8-49a8-bf02-24684d82b9c0",
 		Handler: echoHandleIntent,
 	},
-}
-
-func main() {
-	alexa.Run(skills, "3000")
 }
 
 func echoHandleIntent(w http.ResponseWriter, r *http.Request) {
@@ -25,11 +24,28 @@ func echoHandleIntent(w http.ResponseWriter, r *http.Request) {
 		switch request.GetIntentName() {
 		case "lock":
 			log.Println("Locking computer")
+
 			response = alexa.NewEchoResponse().OutputSpeech("Computer has been locked.").Card("ComputerControl", "Computer has been locked.")
 		}
+
+		//Add new intents here by name
+
 	}
 
 	json, _ := response.String()
 	w.Header().Set("Content-Type", "application/json;charset=UTF-8")
 	w.Write(json)
+}
+
+func main() {
+	redisClient = redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "", // no password set
+		DB:       0,  // use default DB
+	})
+
+	pong, err := redisClient.Ping().Result()
+	log.Println(pong, err)
+
+	alexa.Run(applications, "3000")
 }
