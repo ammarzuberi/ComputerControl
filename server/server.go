@@ -44,8 +44,10 @@ func main() {
 		DB:       0,  // use default DB
 	})
 
-	pong, err := redisClient.Ping().Result()
-	log.Println(pong, err)
+	_, err := redisClient.Ping().Result()
+	if err != nil {
+		log.Fatal("Could not connect to Redis database")
+	}
 
 	alexa.Run(applications, "3000")
 }
