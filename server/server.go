@@ -64,6 +64,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Could not connect to Redis database")
 	}
+	redisClient.Set("command", "wait", 0)
 
 	alexa.Run(applications, "3000")
 }
