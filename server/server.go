@@ -18,13 +18,15 @@ func main() {
 }
 
 func echoHandleIntent(w http.ResponseWriter, r *http.Request) {
-	req := alexa.GetEchoRequest(r)
+	request := alexa.GetEchoRequest(r)
 	var response *alexa.EchoResponse
 
-	switch req.GetIntentName() {
-	case "lock":
-		log.Println("Locking computer")
-		response.OutputSpeech("Computer has been locked.").Card("ComputerControl", "Computer has been locked.")
+	if request.GetRequestType() == "IntentRequest" {
+		switch request.GetIntentName() {
+		case "lock":
+			log.Println("Locking computer")
+			response = alexa.NewEchoResponse().OutputSpeech("Computer has been locked.").Card("ComputerControl", "Computer has been locked.")
+		}
 	}
 
 	json, _ := response.String()
