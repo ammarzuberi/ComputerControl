@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/go-redis/redis"
 	alexa "github.com/mikeflynn/go-alexa/skillserver"
 	"log"
@@ -14,6 +15,18 @@ var applications = map[string]interface{}{
 		AppID:   "amzn1.ask.skill.058881dc-31d8-49a8-bf02-24684d82b9c0",
 		Handler: echoHandleIntent,
 	},
+	"/getCommand": alexa.StdApplication{
+		Handler: handleCommandCallback,
+	},
+}
+
+func handleCommandCallback(w http.ResponseWriter, r *http.Request) {
+	currentCommand, err := redisClient.Get("command").Result()
+	if err != nil {
+		fmt.Fprintf(w, "Error")
+	} else {
+		fmt.Fprintf(w, currentCommand)
+	}
 }
 
 func echoHandleIntent(w http.ResponseWriter, r *http.Request) {
