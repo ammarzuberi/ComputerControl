@@ -17,6 +17,7 @@ var applications = map[string]interface{}{
 	},
 	"/getCommand": alexa.StdApplication{
 		Handler: handleCommandCallback,
+		Methods: "getCommand",
 	},
 }
 
