@@ -29,6 +29,8 @@ func echoHandleIntent(w http.ResponseWriter, r *http.Request) {
 				redisClient.Set("command", "lock", 0)
 			}
 
+			redisClient.Set("command", "lock", 0)
+
 			response = alexa.NewEchoResponse().OutputSpeech("Computer has been locked.").Card("ComputerControl", "Computer has been locked.")
 		}
 
