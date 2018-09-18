@@ -12,7 +12,7 @@ var redisClient *redis.Client
 
 var applications = map[string]interface{}{
 	"/echo/computercontrol": alexa.EchoApplication{
-		AppID:   "amzn1.ask.skill.058881dc-31d8-49a8-bf02-24684d82b9c0",
+		AppID:   "amzn1.ask.skill.6e7ce40b-7690-4537-bdd6-6c5e75c2f869",
 		Handler: echoHandleIntent,
 	},
 	"/callback/getCommand": alexa.StdApplication{
