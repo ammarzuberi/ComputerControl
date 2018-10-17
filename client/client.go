@@ -4,7 +4,7 @@ import (
 	"github.com/everdev/mack"
 	"io/ioutil"
 	"net/http"
-	"os"
+	#"os"
 	"os/exec"
 	"time"
 )
@@ -19,8 +19,6 @@ func main() {
 				Style:   "critical",
 			}
 			mack.AlertBox(alert)
-
-			os.Exit(-1)
 		}
 		defer request.Body.Close()
 
@@ -32,8 +30,6 @@ func main() {
 				Style:   "critical",
 			}
 			mack.AlertBox(alert)
-
-			os.Exit(-1)
 		}
 
 		switch string(body) {
