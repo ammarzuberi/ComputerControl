@@ -11,7 +11,7 @@ import (
 
 func main() {
 	for {
-		request, err := http.Get("https://computercontrol.progerse.com/callback/getCommand")
+		request, err := http.Get("https://computercontrol.mydomain.com/callback/getCommand")
 		if err != nil {
 			alert := mack.AlertOptions{
 				Title:   "ComputerControl Error",
